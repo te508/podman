@@ -164,6 +164,7 @@ podman system df
 podman container run hello
 
 podman container run --name demo -it {{ registry-host }}/{{ os-images-path }}/alpine:3.14
+вот так получилось: podman pull artifactory.raiffeisen.ru/ext-rbru-osimage-docker/alpine:3.14
 /# cat /etc/os-release
 /# exit 
 ```
