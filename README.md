@@ -279,7 +279,7 @@ Given
 
 When участники именуют сценарии, выполняют команды и анализируют их вывод и поведение
 ----
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть список image?"
 ```shell
 podman image ls # TODO: собственные пометки участников для будущего использования в проектах
 ```
@@ -290,13 +290,13 @@ podman image pull {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть историю изменений и более подробно? (jq выделяет цветом)"
 ```shell
 podman image history {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 podman image inspect {{ registry-host }}/{{ os-images-path }}/alpine:3.14 [| jq]
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как скачать, создать и запустить контейнер и создать файл, закоммитить изменения?"
 ```shell
 podman container run --name demo -it {{ registry-host }}/{{ os-images-path }}/alpine:3.14
 /# touch side-effect.txt
@@ -306,29 +306,35 @@ podman container commit demo {{ registry-host }}/container-training-docker/{{ re
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как добавить новое строковое имя к сущестующему image?"
 ```shell
 podman image tag {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
 podman image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как опубликовать мой новый image в artifactory?"
 ```shell
 podman image push {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как удалить локальные контейнеры?"
 ```shell
 podman image ls
 podman container rm demo
-podman image prune
+podman image prune // удаляет dangling images
 podman image ls
-podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0
+podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:1.0.0 // по факту тут получается антег, т.к. образ есть с другим именем
 podman image ls
-podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest
+podman image rm {{ registry-host }}/container-training-docker/{{ registry-account }}/demo:latest // удалится, т.к. это было последнее имя образа
 podman image ls
 podman image prune --all
 ```
+
+image - это типа диск, а контейнер - это запущенная программа. если контейнер еще зупущен, то образ считается нужным и не будет удален при prune.
+для виндоводов:
+есть софт с инсталлером, а есть портабл (архив)
+портабл - это image
+контейнер - это портабл программа, запущенная несколько раз (типа несколько инстансов). каждое окошко ПО делает свобю спец папочку. у каждого процесса есть своя папочка, куда он может писать изменения.
 
 Then участники делятся проблемами и отвечают на вопросы
 ----
